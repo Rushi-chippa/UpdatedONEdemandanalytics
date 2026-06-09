@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // === Intercept global fetch to handle cross-origin dev servers dynamically ===
+    const originalFetch = window.fetch;
+    window.fetch = function (input, init) {
+        if (typeof input === 'string' && input.startsWith('/api/')) {
+            const apiBase = window.location.origin.includes(':5000') ? '' : 'http://localhost:5000';
+            input = apiBase + input;
+        }
+        return originalFetch(input, init);
+    };
+
     // === Application State Management (AppStore) ===
     const AppStore = {
         state: {
