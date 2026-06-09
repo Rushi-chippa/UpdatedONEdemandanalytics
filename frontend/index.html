@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demandalytics</title>
+    <link rel="icon" href="ProjectImages/data-analytics.png">
+    <!-- Premium Font Integration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for Enterprise Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- 1. TRENDY SIDE-BY-SIDE LANDING UI -->
+    <section id="landingSection" class="hero-section">
+        <!-- Modern Landing Header -->
+        <header class="landing-header">
+            <div class="logo-group">
+                <img src="ProjectImages/data-analytics.png" alt="Logo" style="width: 28px; height: 28px;">
+                <span class="logo-text">demandalytics</span>
+            </div>
+            <nav class="landing-nav">
+                <!-- <button id="loadDemoBtn" class="btn-link">Try Demo</button> -->
+                <button id="howItWorksBtn" class="btn-link">How it Works</button>
+                <button id="contactSupportBtn" class="btn-link">Contact Support</button>
+            </nav>
+        </header>
+
+        <div class="trendy-hero-container">
+            <div class="hero-grid">
+                <!-- Left: Content -->
+                <div class="hero-text-area">
+                    <h1 class="main-title">Strategic <br>Intelligence <br><span class="text-gradient">for Modern
+                            Teams</span></h1>
+                    <p class="main-desc">Upload any dataset and let Demandalytics Strategic transform raw records into a
+                        high-density, conversational analytical suite in milliseconds.</p>
+                    <div class="hero-cta-group">
+                        <button class="btn-primary" id="startAnalysisBtn">START ANALYSIS NOW</button>
+                    </div>
+                </div>
+
+                <!-- Right: Visual Container -->
+                <div class="hero-visual-area">
+                    <div class="trendy-image-box" id="dropZone">
+                        <img src="ProjectImages/PIC.png" alt="Strategic Insight Mockup" class="hero-promo-img">
+                        <input type="file" id="fileInput" accept=".csv, .xlsx, .xls" multiple hidden>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Decorative Elements -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+
+    </section>
+
+    <!-- Dashboard Loader Overlay (MOVED OUTSIDE FOR VISIBILITY) -->
+    <div id="quantumLoader" class="loader-overlay hidden">
+        <div class="loader-content">
+            <div class="loader-spinner">
+                <div class="spinner-inner"></div>
+            </div>
+            <h2 id="loaderText">Synthesizing Datapoints...</h2>
+            <p>AI is generating semantic executive visualizations.</p>
+        </div>
+    </div>
+
+    <!-- 2. PROFESSIONAL DASHBOARD WORKSPACE -->
+    <div id="workspaceView" class="workspace-wrapper hidden">
+        <!-- Permanent B2B Left Sidebar Panel -->
+        <aside class="layout-sidebar">
+            <div class="sidebar-header" onclick="resetWorkspace()">
+                <img src="ProjectImages/data-analytics.png" alt="Logo" style="width: 28px; height: 28px;">
+                <span class="logo-text">demandalytics</span>
+            </div>
+
+            <div class="intelligence-clock-box">
+                <div class="clock-label"><span class="status-dot-pulse"></span> SYSTEM LIVE</div>
+                <div id="liveIntelligenceClock">--:--:--</div>
+                <div id="currentIntelligenceDate">---- --, ----</div>
+            </div>
+
+            <div class="sidebar-nav-section">
+                <div class="sidebar-section-title">Navigation</div>
+                <div class="tb-links" id="mainNavTabs">
+                    <!-- Dynamic Tabs Injected via JS -->
+                </div>
+            </div>
+
+            <!-- Permanent Explore & Filter Panel inside Sidebar -->
+            <div class="sidebar-filter-section">
+                <div class="sidebar-section-title"><i class="fa-solid fa-filter"></i> Explore & Filter</div>
+
+                <!-- Focus Metric Dropdown -->
+                <div class="filter-select-group" id="metricFocusGroup">
+                    <label for="metricFocusSelect"><i class="fa-solid fa-chart-line"></i> Primary Focus</label>
+                    <select id="metricFocusSelect" onchange="applyDrillDownFilter()">
+                        <option value="">Detecting metrics...</option>
+                    </select>
+                </div>
+
+                <!-- SKU Search -->
+                <div id="itemSearchContainer" class="item-search-container hidden">
+                    <label for="itemSearchInput"><i class="fa-solid fa-magnifying-glass"></i> Item Search</label>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="itemSearchInput" placeholder="Search SKU..." autocomplete="off">
+                        <div id="searchSuggestPop" class="search-suggestions-pop hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Filter Dropdowns -->
+                <div id="filterDropdowns" class="filter-dropdowns"></div>
+
+                <div id="activeFilterBadge" class="active-filter-badge hidden"></div>
+
+                <button id="clearFiltersBtn" class="btn-clear-filter hidden" onclick="clearAllFilters()">
+                    <i class="fa-solid fa-xmark"></i> CLEAR FILTERS
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="btn-primary btn-outline btn-sm btn-full-width" onclick="resetWorkspace()">
+                    <i class="fa-solid fa-rotate"></i> NEW ANALYSIS
+                </button>
+            </div>
+        </aside>
+
+        <!-- Right Scrollable Main Workspace Canvas -->
+        <div class="layout-canvas">
+            <header class="top-bar">
+                <div class="tb-left header-left">
+                    <h1 id="activeTabText">Executive Intelligence Briefing</h1>
+                    <p class="tb-subtitle">Key metrics, AI-powered insights, and anomaly detection</p>
+                </div>
+
+                <div class="tb-right-minimal">
+                    <div class="theme-select-wrapper">
+                        <i class="fa-solid fa-palette"></i>
+                        <select id="colorThemeDropdown">
+                            <option value="blue">Default Blue</option>
+                            <option value="multicolor">Vibrant Multi-Color</option>
+                            <option value="emerald">Rich Emerald</option>
+                            <option value="sunset">Sunset Glow</option>
+                            <option value="amethyst">Midnight Amethyst</option>
+                            <option value="ruby">Royal Ruby</option>
+                            <option value="ocean">Oceanic Breeze</option>
+                        </select>
+                    </div>
+                    <div class="mode-pill-toggle">
+                        <div class="mode-glider"></div>
+                        <button class="mode-btn active" data-mode="visual">
+                            <i class="fa-solid fa-chart-column"></i> VISUALS
+                        </button>
+                        <button class="mode-btn" data-mode="analytical">
+                            <i class="fa-solid fa-brain"></i> STRATEGIC AI
+                        </button>
+                        <input type="hidden" id="reportMode" value="visual">
+                    </div>
+                    <button id="exportReportBtn" class="btn-primary btn-sm">
+                        <i class="fa-solid fa-file-pdf"></i> PDF <span id="selectedCount">(0)</span>
+                    </button>
+                    <button id="exportPptxBtn" class="btn-primary btn-sm">
+                        <i class="fa-solid fa-file-powerpoint"></i> PPTX
+                    </button>
+                </div>
+            </header>
+
+            <main class="workspace-content">
+                <div class="report-selection-row">
+                    <div class="report-selection-control">
+                        <input type="checkbox" id="selectAllCharts" checked>
+                        <label for="selectAllCharts">Select All for Strategy Report</label>
+                    </div>
+                </div>
+
+                <div id="anomalyPanel" class="anomaly-panel hidden">
+                    <div class="anomaly-header">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Automated Risk & Anomaly Detection</span>
+                    </div>
+                    <div id="anomalyList" class="anomaly-list">
+                        <!-- Anomalies injected here -->
+                    </div>
+                </div>
+
+                <div id="dashboardCanvas">
+                    <!-- 2-Column Balanced Layout -->
+                    <div class="executive-top-row">
+                        <!-- KPIs take the left majority -->
+                        <div class="kpi-row" id="kpiRow"></div>
+                        <!-- AI Consultant takes the right sidebar -->
+                        <div class="strategic-summary-box">
+                            <h4><i class="fa-solid fa-wand-magic-sparkles"></i> STRATEGIC AI CONSULTANT</h4>
+                            <div id="aiStrategicText">Ready for deep-pulse data synthesis...</div>
+                        </div>
+                    </div>
+
+                    <!-- Balanced 2-Column Chart Grid -->
+                    <div id="chartGrid" class="bento-grid"></div>
+                </div>
+
+                <!-- Dynamic B2B Strategic Action Planner view -->
+                <div id="actionPlannerCanvas" class="hidden">
+                    <div class="explorer-header">
+                        <h2>Strategic Action Planner</h2>
+                        <p class="tb-subtitle">Dollar-quantified business optimizations and real-time execution
+                            checklists</p>
+                    </div>
+                    <div id="actionPlannerGrid" class="action-planner-grid">
+                        <!-- Action cards dynamically injected here -->
+                    </div>
+                </div>
+
+                <!-- Corporate Category Diagnostics Scorecard view -->
+                <div id="diagnosticsCanvas" class="hidden">
+                    <div class="explorer-header">
+                        <h2>Category Performance Scorecard</h2>
+                        <p id="diagnosticsMetadata" class="tb-subtitle">Aggregated segment performance matrix and active
+                            outline diagnostics</p>
+                    </div>
+                    <div class="table-container">
+                        <table id="diagnosticsScorecardTable" class="scorecard-table">
+                            <!-- Category diagnostics scorecard matrix injected here -->
+                        </table>
+                    </div>
+                </div>
+
+                <div id="mlPredictiveCanvas" class="hidden">
+                    <div class="ml-workspace-grid">
+                        <!-- Left Sidebar: Configuration -->
+                        <div class="ml-sidebar-card">
+                            <div class="card-inner-header">
+                                <h3><i class="fa-solid fa-sliders"></i> Model Configurator</h3>
+                                <p>Configure and train a custom machine learning model on your dataset.</p>
+                            </div>
+
+                            <div class="ml-form-group">
+                                <label for="mlTargetSelect"><i class="fa-solid fa-bullseye"></i> Target Column
+                                    (Y)</label>
+                                <span class="field-desc">The variable you want to predict.</span>
+                                <select id="mlTargetSelect" class="ml-select">
+                                    <option value="">Select Target...</option>
+                                </select>
+                            </div>
+
+                            <div class="ml-form-group">
+                                <label><i class="fa-solid fa-list-check"></i> Predictor Features (X)</label>
+                                <span class="field-desc">Select features to train the model.</span>
+                                <div id="mlFeaturesContainer" class="ml-features-checklist">
+                                    <!-- Dynamically populated checklist -->
+                                    <p class="loading-desc">Load a dataset to configure features...</p>
+                                </div>
+                            </div>
+
+                            <button id="mlTrainBtn" class="btn-primary btn-full-width">
+                                <i class="fa-solid fa-brain"></i> Train Custom AI Model
+                            </button>
+                        </div>
+
+                        <!-- Right Panel: Results & Interactive Simulator -->
+                        <div class="ml-main-content">
+                            <!-- Empty State (Shown before model is trained) -->
+                            <div id="mlEmptyState" class="ml-empty-panel">
+                                <i class="fa-solid fa-microchip ml-empty-icon"></i>
+                                <h3>No Active Model Trained</h3>
+                                <p>Select a numeric target variable and your preferred predictor features in the
+                                    sidebar, then hit "Train Custom AI Model" to launch the AutoML training sequence.
+                                </p>
+                            </div>
+
+                            <!-- Active State (Shown after training) -->
+                            <div id="mlActiveWorkspace" class="ml-active-panel hidden">
+                                <!-- Row 1: Accuracy Circular Dial & Text Description -->
+                                <div class="ml-row-metrics">
+                                    <div class="ml-metric-card accuracy-dial-card">
+                                        <div class="dial-container">
+                                            <svg class="radial-gauge" viewBox="0 0 100 100">
+                                                <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                                                <circle id="accuracyGaugeFill" class="gauge-fill" cx="50" cy="50" r="40"
+                                                    stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                                            </svg>
+                                            <div class="dial-center">
+                                                <span id="accuracyPercentVal">0%</span>
+                                                <span class="dial-sub">Accuracy (R²)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ml-metric-card summary-diagnostic-card">
+                                        <h4><i class="fa-solid fa-chart-line"></i> Strategic Performance Metrics</h4>
+                                        <div class="diag-metrics-grid">
+                                            <div class="diag-item">
+                                                <span class="diag-label">Mean Absolute Error (MAE)</span>
+                                                <span id="metricMaeValue" class="diag-value">--</span>
+                                            </div>
+                                            <div class="diag-item">
+                                                <span class="diag-label">Root Mean Squared Error (RMSE)</span>
+                                                <span id="metricRmseValue" class="diag-value">--</span>
+                                            </div>
+                                        </div>
+                                        <p class="diag-explanation">
+                                            Your model is trained using a <strong>Random Forest Regressor</strong>. The
+                                            Accuracy Coefficient (R²) determines how much variance in your target is
+                                            predicted by the selected features. A higher accuracy indicates stronger
+                                            predictive certainty.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Row 2: Charts Grid -->
+                                <div class="ml-row-charts">
+                                    <div class="ml-chart-card">
+                                        <div class="chart-header-minimal">
+                                            <h4><i class="fa-solid fa-bolt"></i> Feature Drivers</h4>
+                                            <p>Relative importance of each feature in predicting the target</p>
+                                        </div>
+                                        <div class="ml-chart-wrapper">
+                                            <canvas id="mlDriversChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="ml-chart-card">
+                                        <div class="chart-header-minimal">
+                                            <h4><i class="fa-solid fa-chart-area"></i> Actual vs. AI Predicted Fit</h4>
+                                            <p>Validation alignment proving predictive accuracy (Validation Set)</p>
+                                        </div>
+                                        <div class="ml-chart-wrapper">
+                                            <canvas id="mlFitChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 3: Interactive Prescriptive Simulator -->
+                                <div class="ml-simulator-panel">
+                                    <div class="sim-header">
+                                        <div class="sim-title-group">
+                                            <h3><i class="fa-solid fa-sliders"></i> Prescriptive Scenario Simulation
+                                            </h3>
+                                            <p>Adjust inputs dynamically below to simulate the predicted outcome in
+                                                real-time.</p>
+                                        </div>
+                                        <div class="sim-output-widget">
+                                            <span class="sim-out-label" id="predictedTargetLabel">Predicted Value</span>
+                                            <span id="predictedTargetValue" class="sim-out-val">$0.00</span>
+                                            <span id="predictedTargetDelta" class="sim-out-delta">--</span>
+                                        </div>
+                                    </div>
+                                    <div id="mlSlidersGrid" class="sim-sliders-grid">
+                                        <!-- Sliders dynamically built here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Export Progression Overlay -->
+    <div id="downloadOverlay" class="loader-overlay hidden">
+        <div class="loader-content">
+            <div class="loader-spinner">
+                <div class="spinner-inner"></div>
+            </div>
+            <h3 id="overlayTitle">Generating Executive PDF</h3>
+            <p>Processing via stable backend engine...</p>
+        </div>
+    </div>
+
+    <!-- 3. AI CHAT WIDGET -->
+    <div id="chatWidget" class="chat-widget hidden-chat">
+        <div class="chat-header">
+            <div>
+                <i class="fa-solid fa-robot"></i> Demandalytics AI
+            </div>
+            <button class="close-chat-btn" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">Hello! I'm your Demandalytics AI assistant. Ask me anything about the data
+                you just uploaded!</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ask a question..."
+                onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button class="send-chat-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Floating Chat Button -->
+    <button id="floatingChatBtn" class="floating-chat-btn hidden-chat" onclick="toggleChat()">
+        <i class="fa-solid fa-message"></i>
+    </button>
+
+    <!-- How It Works Modal -->
+    <div id="howItWorksModal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-info"></i> How Demandalytics Works</h3>
+                <button class="modal-close-btn" id="closeHowItWorksBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4><span class="step-num">1</span> Upload Your Dataset</h4>
+                    <p>Drag & drop or browse your local file system to load data files (supported formats:
+                        <code>.csv</code>, <code>.xlsx</code>, <code>.xls</code>).</p>
+                </div>
+                <div class="modal-section">
+                    <h4><span class="step-num">2</span> Automatic Synthesis & Diagnostics</h4>
+                    <p>Our analytics engine instantly parses your columns to identify key categorical segments, date
+                        intervals, and numeric metrics. It computes MoM growth, anomaly indicators, and trains
+                        customizable predictive machine learning models.</p>
+                </div>
+                <div class="modal-section">
+                    <h4><span class="step-num">3</span> AI Consultations & Exporting</h4>
+                    <p>Leverage the conversational strategic assistant, filter diagnostic views interactively, and
+                        export state-of-the-art PDF/PPTX executive summaries dynamically themed to match your chosen
+                        dashboard branding.</p>
+                </div>
+                <div class="modal-section schema-box">
+                    <h5>Recommended Column Headers:</h5>
+                    <ul>
+                        <li><strong>Category / String:</strong> <code>Store</code>, <code>Dept</code>,
+                            <code>Region</code>, <code>SKU</code>, etc. <code>(Categorical)</code></li>
+                        <li><strong>Dates:</strong> <code>Date</code>, <code>Timestamp</code> (formatted as DD-MM-YYYY
+                            or YYYY-MM-DD)</li>
+                        <li><strong>Metrics / Numeric:</strong> <code>Weekly_Sales</code>, <code>Sales</code>,
+                            <code>Revenue</code>, <code>Profit</code>, etc.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Support Modal -->
+    <div id="contactSupportModal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-envelope"></i> Contact Support & Feedback</h3>
+                <button class="modal-close-btn" id="closeContactBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="contactForm" class="feedback-form">
+                    <div class="form-row-grid">
+                        <div class="form-group">
+                            <label for="feedbackName">Full Name</label>
+                            <input type="text" id="feedbackName" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedbackEmail">Email Address</label>
+                            <input type="email" id="feedbackEmail" placeholder="your.email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackCategory">Category</label>
+                        <select id="feedbackCategory" required>
+                            <option value="General Feedback">General Feedback</option>
+                            <option value="Question">Question</option>
+                            <option value="Feature Request">Feature Request</option>
+                            <option value="Bug Report">Bug Report</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackMessage">Message</label>
+                        <textarea id="feedbackMessage" rows="5"
+                            placeholder="Share your suggestions, questions, or bug reports with us..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full-width">
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+                <div id="feedbackSuccessState" class="feedback-success-state hidden">
+                    <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <h4>Feedback Received!</h4>
+                    <p>Thank you for reaching out. Your message has been successfully saved to our persistent feedback
+                        store. Our team will review it shortly.</p>
+                    <button class="btn-primary" id="successCloseBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.1/dist/chartjs-chart-matrix.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@2.3.0/dist/chartjs-chart-treemap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.2.0/build/index.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- EmailJS SDK Integration -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
